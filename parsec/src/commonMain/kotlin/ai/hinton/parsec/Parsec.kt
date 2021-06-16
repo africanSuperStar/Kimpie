@@ -83,7 +83,7 @@ sealed interface Parsec <Stream, UserState, Result>
     ///
     /// - returns: A parser that pretends that it hasn't consumed any input when
     ///   `self` fails.
-    var attempt get() : Parsec <Stream, UserState, Result>
+    var attempt : Parsec <Stream, UserState, Result>
 
     /// A combinator that parses without consuming any input.
     ///
@@ -91,7 +91,7 @@ sealed interface Parsec <Stream, UserState, Result>
     /// with `attempt` if this is undesirable.
     ///
     /// - returns: A parser that parses without consuming any input.
-    var lookAhead get() : Parsec <Stream, UserState, Result>
+    var lookAhead : Parsec <Stream, UserState, Result>
 
     /// This combinator applies `self` _zero_ or more times. It returns an
     /// accumulation of the returned values of `self` that were passed to the
@@ -104,11 +104,11 @@ sealed interface Parsec <Stream, UserState, Result>
     ///   passed value and the accumulated values.
     /// - returns: The processed values of the accumulator function.
     fun manyAccumulator(
-        accumulator: (Result, [Result]) -> [Result]
-    ) : GenericParser <Stream, UserState, [Result]>
+        accumulator: (Result, Collection<Result>) -> Collection<Result>
+    ) : GenericParser <Stream, UserState, Collection<Result>>
 
     /// A parser that always fails without consuming any input.
-    static var empty get() : Parsec <Stream, UserState, Result>
+    var empty : Parsec <Stream, UserState, Result>
 
     /// The parser returned by `p.labels(message)` behaves as parser `p`, but
     /// whenever the parser `p` fails _without consuming any input_, it replaces
@@ -141,17 +141,15 @@ sealed interface Parsec <Stream, UserState, Result>
     ///   without consuming any input.
     /// - SeeAlso: `GenericParser.noOccurence`, `GenericParser.fail(message:
     ///   String)` and `<?>`
-    companion object {
-        @JvmStatic
-        fun unexpected(message: String) : Parsec <Stream, UserState, Result>
+    fun interface Unexpected {
+        fun unexpected(message: String)
     }
 
     /// Return a parser that always fails with the supplied message.
     ///
     /// - parameter message: The failure message.
     /// - returns: A parser that always fail.
-    companion object {
-        @JvmStatic
+    fun interface Fail <Stream, UserState, Result> {
         fun fail(message: String) : Parsec <Stream, UserState, Result>
     }
 
@@ -159,10 +157,7 @@ sealed interface Parsec <Stream, UserState, Result>
     ///
     /// - returns: The current source position.
     /// - SeeAlso 'SourcePosition'.
-    companion object {
-        @JvmStatic
-        var sourcePosition : GenericParser <Stream, UserState, SourcePosition>
-    }
+    var sourcePosition : GenericParser <Stream, UserState, SourcePosition>
 }
 
 //==============================================================================

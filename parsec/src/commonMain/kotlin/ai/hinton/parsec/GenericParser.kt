@@ -9,5 +9,7 @@ package ai.hinton.parsec
 /// - requires: StreamType.Iterator has to be a value type.
 public sealed class GenericParser <Stream, UserState, Result> : Parsec <Stream, UserState, Result>
 {
+    init {
 
+    }
 }
