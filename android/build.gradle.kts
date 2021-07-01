@@ -13,8 +13,8 @@ dependencies {
 android {
     compileSdkVersion(30)
     defaultConfig {
-        applicationId = "ai.hinton.kmmappbuilder.android"
-        minSdkVersion(30)
+        applicationId = "healthcare.astrocyte.Astrocyte.android"
+        minSdkVersion(26)
         targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
@@ -23,5 +23,9 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_16
+        targetCompatibility = JavaVersion.VERSION_16
     }
 }

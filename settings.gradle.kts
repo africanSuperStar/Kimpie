@@ -6,6 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "KMM_App_Builder"
+rootProject.name = "Astrocyte"
 include(":android")
 include(":shared")
+include(":compose-desktop")
