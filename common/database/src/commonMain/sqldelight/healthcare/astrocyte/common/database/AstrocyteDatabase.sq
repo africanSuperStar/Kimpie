@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS AstrocyteItemEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    orderNum INTEGER NOT NULL,
+    text TEXT NOT NULL,
+    isDone INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+selectAll:
+SELECT *
+FROM AstrocyteItemEntity;
+
+select:
+SELECT *
+FROM AstrocyteItemEntity
+WHERE id = :id;
+
+add:
+INSERT INTO AstrocyteItemEntity (orderNum, text)
+VALUES ((CASE (SELECT COUNT(*) FROM AstrocyteItemEntity) WHEN 0 THEN 1 ELSE (SELECT MAX(orderNum)+1 FROM AstrocyteItemEntity) END), :text);
+
+setText:
+UPDATE AstrocyteItemEntity
+SET text = :text
+WHERE id = :id;
+
+setDone:
+UPDATE AstrocyteItemEntity
+SET isDone = :isDone
+WHERE id = :id;
+
+delete:
+DELETE FROM AstrocyteItemEntity
+WHERE id = :id;
+
+getLastInsertId:
+SELECT last_insert_rowid();
+
+clear:
+DELETE FROM AstrocyteItemEntity;

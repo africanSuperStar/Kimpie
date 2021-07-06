@@ -1,15 +1,18 @@
 buildscript {
+    // __LATEST_COMPOSE_RELEASE_VERSION__
+    val composeVersion = System.getenv("COMPOSE_TEMPLATE_COMPOSE_VERSION") ?: "0.5.0-build226"
+
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10")
-        classpath("com.android.tools.build:gradle:4.0.2")
-        classpath("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
-        classpath("org.jetbrains.compose:compose-gradle-plugin:0.1.0-build113")
+        classpath("org.jetbrains.compose:compose-gradle-plugin:$composeVersion")
+        classpath("com.android.tools.build:gradle:4.0.1")
+        // __KOTLIN_COMPOSE_VERSION__
+        classpath(kotlin("gradle-plugin", version = "1.5.10"))
     }
 }
 
@@ -17,9 +20,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }

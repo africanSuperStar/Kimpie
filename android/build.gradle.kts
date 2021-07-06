@@ -1,31 +1,43 @@
+import org.jetbrains.compose.compose
+
 plugins {
     id("com.android.application")
     kotlin("android")
-}
-
-dependencies {
-    implementation(project(":shared"))
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    id("org.jetbrains.compose")
 }
 
 android {
     compileSdkVersion(30)
+
     defaultConfig {
-        applicationId = "healthcare.astrocyte.Astrocyte.android"
-        minSdkVersion(26)
+        minSdkVersion(23)
         targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_16
-        targetCompatibility = JavaVersion.VERSION_16
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude("META-INF/*")
+    }
+}
+
+dependencies {
+    implementation(project(":common:database"))
+    implementation(project(":common:utils"))
+    implementation(project(":common:root"))
+    implementation(project(":common:compose-ui"))
+    implementation(compose.material)
+    implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
+    implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
+    implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinLogging)
+    implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinTimeTravel)
+    implementation(Deps.ArkIvanov.Decompose.decompose)
+    implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
+    implementation(Deps.AndroidX.AppCompat.appCompat)
+    implementation(Deps.AndroidX.Activity.activityCompose)
 }
